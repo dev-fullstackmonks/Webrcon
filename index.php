@@ -1,5 +1,8 @@
 <?php
 include_once("webrcon.php");
+$host = ''; // Server host name or IP
+$port = ''; // Port rcon is listening on
+$password = ''; // rcon.password setting set in server.properties
 $client = new Client("ws://{$host}:{$port}/{$password}");
 $data = array(
   'Identifier' => 0,
