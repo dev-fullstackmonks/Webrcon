@@ -7,18 +7,33 @@ Just download the file and run on your server.
 
 ### Instantiating a client
 
-require_once "PHPTelnet.php";
+include_once("webrcon.php");
 
-$telnet = new PHPTelnet();
+$host = ''; // Server host name or IP
 
-$result = $telnet->Connect('Server Ip',PORT,'Password');
+$port = ''; // Port rcon is listening on
 
-if ($result == 0){
+$password = ''; // rcon.password setting set in server.properties
 
-  echo "Telnet Server is working!";	
+$client = new Client("ws://{$host}:{$port}/{$password}");
+
+$data = array(
+  'Identifier' => 0,
+  'Message' => 'oxide.show group admin',
+  'Stacktrace' => '',
+  'Type' => 3
+);
+
+$client->send(json_encode($data));
+
+if($client->__getStatus() == 'yes'){
+
+  echo "WebRCON server connection successful.";
+  
+  $client->__destruct();
   
 }else{
 
-  echo "Telnet Server is not working!";	
+  echo 'Connection failed. Please check your server details. Also ensure the server is running and the ports are open.';
   
 }
